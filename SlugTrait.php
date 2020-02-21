@@ -11,11 +11,11 @@ trait SlugTrait
 	/**
 	 * 
 	 * @param $string
-	 * @example $model->setSlug($model, $string)
+	 * @example $model->setSlug($string)
 	 * 
 	 * @return string
 	 */
-	public function setSlug($string)
+	public function setSlug($string): string
 	{
 		return self::handle($string);
 	}
@@ -23,11 +23,11 @@ trait SlugTrait
 	/**
 	 * 
 	 * @param $string
-	 * @example $model->hasSlug($model, $string)
+	 * @example $model->hasSlug($string)
 	 * 
 	 * @return boolean
 	 */
-	public function hasSlug($string)
+	public function hasSlug($string): bool
 	{
 		return self::handle($string, true);
 	}
@@ -48,6 +48,6 @@ trait SlugTrait
 		if($check)
     		return (bool)$count;
 
-    	return (bool)$count ? $slug.'-'.$count : $slug;
+		return (bool)$count ? $slug.'-'.$count : $slug;
 	}
 }
