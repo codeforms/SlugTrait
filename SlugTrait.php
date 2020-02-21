@@ -43,11 +43,19 @@ trait SlugTrait
 	private function handle(string $string, bool $check = false)
 	{
 		$slug  = Str::slug($string);
-		$count = $this->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$this->id}'")->count();
+		$count = count(self::model()->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$this->id}'")->get());
 
 		if($check)
     		return (bool)$count;
 
-		return (bool)$count ? $slug.'-'.$count : $slug;
+		return ($count > 0) ? "{$slug}-{$count}" : $slug;
+	}
+
+	/**
+	 * @return object
+	 */
+	private function model(): object
+	{
+		return app(get_class($this));
 	}
 }
