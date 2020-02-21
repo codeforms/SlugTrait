@@ -4,51 +4,50 @@ namespace CodeForms\Repositories\Slug;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 /**
- * trait SlugTrait
- * 
  * @package CodeForms\Repositories\Slug
- * 
  */
 trait SlugTrait
 {
 	/**
-	 * @param Model $model
+	 * 
 	 * @param $string
+	 * @example $model->setSlug($model, $string)
 	 * 
 	 * @return string
 	 */
-	public function setSlug(Model $model, $string)
+	public function setSlug($string)
 	{
-		return self::handle($model, $string);
+		return self::handle($string);
 	}
 
 	/**
-	 * @param Model $model
+	 * 
 	 * @param $string
+	 * @example $model->hasSlug($model, $string)
 	 * 
 	 * @return boolean
 	 */
-	public function hasSlug(Model $model, $string)
+	public function hasSlug($string)
 	{
-		return self::handle($model, $string, true);
+		return self::handle($string, true);
 	}
 
 	/**
-	 * @param Model $model
+	 * 
 	 * @param string $string
 	 * @param boolean $check
 	 * @access private
 	 * 
 	 * @return string|bool
 	 */
-	private function handle(Model $model, string $string, bool $check = false)
+	private function handle(string $string, bool $check = false)
 	{
 		$slug  = Str::slug($string);
-		$count = $model->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$model->id}'")->count();
+		$count = $this->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$this->id}'")->count();
 
 		if($check)
-    			return (bool)$count;
+    		return (bool)$count;
 
-    		return (bool)$count ? $slug.'-'.$count : $slug;
+    	return (bool)$count ? $slug.'-'.$count : $slug;
 	}
 }
