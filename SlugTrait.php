@@ -2,7 +2,6 @@
 namespace CodeForms\Repositories\Slug;
 
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\Model;
 /**
  * @package CodeForms\Repositories\Slug
  */
@@ -11,7 +10,7 @@ trait SlugTrait
 	/**
 	 * 
 	 * @param $string
-	 * @example $model->setSlug($string)
+	 * @example $object->setSlug($string)
 	 * 
 	 * @return string
 	 */
@@ -23,7 +22,7 @@ trait SlugTrait
 	/**
 	 * 
 	 * @param $string
-	 * @example $model->hasSlug($string)
+	 * @example $object->hasSlug($string)
 	 * 
 	 * @return boolean
 	 */
@@ -43,19 +42,11 @@ trait SlugTrait
 	private function handle(string $string, bool $check = false)
 	{
 		$slug  = Str::slug($string);
-		$count = count(self::model()->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$this->id}'")->get());
+		$count = count(app(get_class($this))->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$this->id}'")->get());
 
 		if($check)
     		return (bool)$count;
 
 		return ($count > 0) ? "{$slug}-{$count}" : $slug;
-	}
-
-	/**
-	 * @return object
-	 */
-	private function model(): object
-	{
-		return app(get_class($this));
 	}
 }
