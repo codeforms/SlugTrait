@@ -1,7 +1,7 @@
 # SlugTrait
-SlugTrait dosyası en sade ve basit biçimde, bir veri kaynağı (Model) için slug denetimi yapar ve benzer bir slug bulursa, slug sonuna count kadar sayı ekler.
+SlugTrait dosyası en sade ve basit biçimde, bir veri kaynağı (Model) için slug denetimi yapar ve benzer bir slug bulursa, slug sonuna 1001 ile 9999999 arası rastgele bir sayı ekler.
 > ornek-post <br>
-> ornek-post-1
+> ornek-post-6468796
 
 ### Kullanım
 Model dosyanıza SlugTrait'i ekleyin;

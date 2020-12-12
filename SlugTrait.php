@@ -45,8 +45,14 @@ trait SlugTrait
 		$count = count(app(get_class($this))->whereRaw("slug REGEXP '^{$slug}(-[0-9]+)?$' and id != '{$this->id}'")->get());
 
 		if($check)
-    		return (bool)$count;
+    		return (bool)$count; 
 
-		return ($count > 0) ? "{$slug}-{$count}" : $slug;
+    	if($count > 0) {
+    		$random_int = random_int(1001, 9999999);
+    		
+    		return "{$slug}-{$random_int}";
+    	}
+
+    	return $slug;
 	}
 }
